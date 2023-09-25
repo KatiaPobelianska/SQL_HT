@@ -1,0 +1,40 @@
+
+--из таблицы Employees вывести всех сотрудников с job_id FI_ACCOUNT
+--select * from Employees 
+--where job_id = 'FI_ACCOUNT';
+
+--вывести всех сотрудников, которые зарабатывают меньше 12000
+--select * from Employees
+--where salary < 12000;
+
+--вывести сотрудников из департаментов 70, 80, 100
+--select * from Employees
+--where department_id in (70,80,100);
+
+--вывести всех сотрудников, у которых имя начинается на D
+--select * from Employees 
+--where first_name like 'D%';
+
+--1.вывести сотрудников, у которых employee_id от 108 до 143
+--select * from Employees
+--where employee_id between 108 and 143;
+--2.
+--select * from Employees
+--where employee_id >= 108 and employee_id <= 143;
+
+--вывести имя и фамилию тех сотрудников, у которых номер телефона начинается с 590
+--select first_name, last_name from Employees
+--where phone like '590%';
+
+--вывести сотрудников, у которых зарплата больше 1000, job_id равно IT_PROG и номер 
+--телефона начинается с 590
+--select * from Employees
+--where salary > 1000 
+--and job_id = 'IT_PROG' 
+--and phone like '590%';
+
+--вывести имя, фамилию и зарплату тех сотрудников, у которых зарплата в интервале [8000; 
+-- 10000] и у них commission_pct не null
+select first_name, last_name, salary from Employees
+where salary between 8000 and 10000 
+and commission_pct is not null;
