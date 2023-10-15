@@ -1,0 +1,20 @@
+create database home_work;
+
+use home_work;
+
+create table Users(
+user_id int auto_increment primary key,
+user_name varchar(50) not null,
+email varchar(100) unique,
+age tinyint check (age between 0 and 140),
+gender char(1) check (gender in ('f', 'm'))
+);
+
+insert into Users (user_name, email, age, gender)
+	values
+    ('John Doe', 'johndoe@example.com', 30, 'm'),
+    ('Jane Smith', 'janesmith@example', 25, 'f');
+
+select * from Users;
+
+
