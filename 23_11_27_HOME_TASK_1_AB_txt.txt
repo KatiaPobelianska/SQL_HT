@@ -1,0 +1,50 @@
+-- 23_11_27_HOME_TASK_1_AB
+-- 1.Вывести клиентов не из Germany, имена которых начинаются на букву A
+SELECT 
+    CustomerName
+FROM
+    Customers
+WHERE
+    Country <> 'Germany'
+        AND UPPER(CustomerName) LIKE 'a%';
+        
+-- 2.Вывести данные о заказах клиентов 1, 2, 5 (проекция: номерзаказа, названиекомпании_перевозчика)
+SELECT 
+    t1.OrderID, t2.ShipperName
+FROM
+    Orders t1
+        INNER JOIN
+    Shippers t2 ON t1.ShipperID = t2.ShipperID
+WHERE
+    t1.CustomerID IN (1 , 2, 3);
+    
+-- 3.Вывести данные о заказах клиентов не из France (проекция: номерзаказа, имяклиента, фамилия_менеджера)
+SELECT 
+    t1.OrderID, t2.CustomerName, t2.ContactName
+FROM
+    Orders t1
+        INNER JOIN
+    Customers t2 ON t1.CustomerID = t2.CustomerID
+WHERE
+    Country <> 'France';
+    
+-- 4.Вывести ср/стоимость товаров от поставщика 4
+SELECT 
+    SUM(price) AS total_price
+FROM
+    Products
+WHERE
+    SupplierID = 4;
+    
+-- 5.Вывести один самый дешевый товар от поставщика 1
+SELECT 
+    ProductName
+FROM
+    Products
+WHERE
+    SupplierID = 1
+ORDER BY Price ASC
+LIMIT 1;
+
+-- Зачем нужна проекция в БД. Дайте короткий ответ:
+-- Ответ: для выбора и отображения только необходимых столбцов из таблицы
