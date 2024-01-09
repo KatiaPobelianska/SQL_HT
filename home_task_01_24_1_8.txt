@@ -1,0 +1,67 @@
+ 1 уровень сложности: ## В рамках БД music напишите след/запросы:
+
+--Вывести имена юзеров не из France
+
+db.users.find(
+    { country: { $nin: ['France'] } },
+    { fullname: 1, country: 1, _id: 0 }
+)
+
+--Добавить несколько реакций на треки
+
+1.db.reactions.insertMany([
+    { emoji: 1, designation: '👍' },
+    { emoji: 2, designation: '❤️' },
+    { emoji: 3, designation: '😊' },
+    { emoji: 4, designation: '👏' },
+    { emoji: 5, designation: '👎' }
+])
+
+2.db.tracks.updateMany({}, {$set: {reactions: []}})
+
+3.var usersId = [1, 2, 3, 4, 5];
+var tracksId = [1, 2, 3, 4, 5];
+var emojis = ["👍", "❤️", "😊", "👏", "👎"];
+for (var i = 0; i < tracksId.length; i++) {
+    var trackId = tracksId[i];
+    var userId = usersId[i]; 
+    var emoji = emojis[i];
+    db.tracks.updateOne(
+        { _id: trackId },
+        {
+            $push: {
+                reactions: {
+                    $each: [
+                    {"userId": usersId[i], "emoji": emojis[i]},
+                    {"userId": usersId[i+1], "emojis": emojis[i+1]},
+                    {"userId": usersId[i+2], "emojis": emojis[i+2]}
+                    ]
+                }
+            }
+        }
+    );
+}
+
+4.db.tracks.updateMany(
+{"reactions": {"userId": null, "emojis": null}},
+{$pull: {"reactions": {"userId": null, "emojis": null}}}
+)
+
+--Вывести названия треков продолжительностью от 1 до 10 мин
+
+db.tracks.find(
+    { duration_secs: { $gte: 1 * 60, $lte: 10 * 60 } },
+    { title: 1, _id: 0 }
+)
+
+--Вывести треки юзера 4
+
+db.tracks.find(
+    { "reactions.userId": 4 },
+    { title: 1, _id: 0 }
+)
+
+--С помощью инструмента онлайн-проектирования описать БД music (юзеры, треки, реакции, плейлисты)
+
+https://dbdiagram.io/d/music-659dbdf7ac844320ae93a375
+
